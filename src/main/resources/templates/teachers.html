@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style type="text/css">
+        table {border-collapse: collapse; font-size: 14px; width: 80%; margin: auto}
+        table, th, td {border: 1px solid darkslategray;padding: 10px}
+    </style>
+</head>
+<body>
+<div style="text-align: center">
+    <span style="color: darkslategray; font-size: 30px">欢迎光临！</span>
+    <hr/>
+    <table class="list">
+        <tr>
+            <th>id</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <td>编辑</td>
+            <td>删除</td>
+        </tr>
+        <tr th:each="teacher : ${page.records}">
+            <td th:text="${teacher.id}">1</td>
+            <td th:text="${teacher.username}">zhangsan</td>
+            <td th:text="${teacher.age}">20</td>
+            <td th:text="${teacher.gender}">男</td>
+            <td><a th:href="@{teacher/editTeacher(id=${teacher.id})}">编辑</a></td>
+            <td><a th:href="@{teacher/deleteTeacher(id=${teacher.id})}">删除</a></td>
+        </tr>
+    </table>
+    <br>
+
+    <div>
+        总记录数: <span th:text="${page.total}"></span> 当前页数: <span th:text="${page.current}"></span>
+        <a th:href="@{/teacher/listTeacher(start=0)}">[首  页]</a>
+        <span th:if="${page.current-1}"><a th:href="@{/teacher/listTeacher(start=${page.current-1})}">[上一页]</a></span>
+
+        <span th:if="${page.current-page.pages}"><a th:href="@{/teacher/listTeacher(start=${page.current+1})}">[下一页]</a></span>
+        <a th:href="@{/teacher/listTeacher(start=${page.pages})}">[末  页]</a>
+    </div>
+</div>
+</body>
+</html>
